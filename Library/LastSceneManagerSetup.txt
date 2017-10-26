@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Abacus.unity
+- path: Assets/_Scenes/MutlipleDigitsTutorial.unity
   isLoaded: 1
   isActive: 1

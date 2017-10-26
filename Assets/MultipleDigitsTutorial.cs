@@ -2,8 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 
-public class BasicsAbacusTutorialController : MonoBehaviour {
+public class MultipleDigitsTutorial : MonoBehaviour {
 
 	public class TextData
 	{
@@ -16,7 +20,7 @@ public class BasicsAbacusTutorialController : MonoBehaviour {
 			this.duration = duration;
 			this.action = action;
 		}
-			
+
 		public float GetDuration(){
 			return duration;
 		}
@@ -40,16 +44,16 @@ public class BasicsAbacusTutorialController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-		introTextData = new List<TextData> ();
-		introTextData.Add (new TextData ("Hello, welcome to this tutorial", 2f));
-		introTextData.Add (new TextData ("An abacus is a device used to do arithmatic", 3f));
 
-		introTextData.Add (new TextData ("Each column of beads in the abacus represents 1 digit", 3f));
-		introTextData.Add (new TextData ("The leftmost column, represents the first digit in a number", 3f));
-		introTextData.Add (new TextData ("The lower beads represents 1 if they are pushed up.", 3f));
-		introTextData.Add (new TextData ("In other words, if 1 lower bead is pushed up, the digit is 1", 5f, "1"));
-		introTextData.Add (new TextData ("If 2 lower beads are pushed up, the digit is 2", 5f, "2"));
+		introTextData = new List<TextData> ();
+		introTextData.Add (new TextData ("The abacus can also represent numbers larger than 9.", 2f));
+		introTextData.Add (new TextData ("Each column represents 1 digit", 3f));
+
+		introTextData.Add (new TextData ("So that means this represents 10", 6f, "10"));
+		introTextData.Add (new TextData ("This represents 11", 3f, "11"));
+		introTextData.Add (new TextData ("This represents 12", 3f, "12"));
+		introTextData.Add (new TextData ("This represents 15", 5f, "15"));
+		introTextData.Add (new TextData ("17", 5f, "17"));
 		introTextData.Add (new TextData ("This represents 3", 3f, "3"));
 		introTextData.Add (new TextData ("This represents 4", 2f, "4"));
 		introTextData.Add (new TextData ("The top bead represents 5 if it is pushed down", 2f));
@@ -83,11 +87,11 @@ public class BasicsAbacusTutorialController : MonoBehaviour {
 			performAction (introTextData [indexOfTextData].GetAction ());
 			break;
 		case 1:
-			
+
 			tutorialText.text = "Here try it ourselve now. Try and make the value of the abacus be 1";
 			if (abacus.getValue () == 1) {
 				tutorialText.text = "Congrats, you have made it 1!";
-				state = 2;
+				state ++;
 				startTime = Time.time;
 			}
 			break;
@@ -95,7 +99,7 @@ public class BasicsAbacusTutorialController : MonoBehaviour {
 			tutorialText.text = "Good job! Now try to make the value of the abacus be 6";
 			if (abacus.getValue () == 6) {
 				tutorialText.text = "Congrats, you have made 6!";
-				state = 3;
+				state ++;
 				startTime = Time.time;
 			}
 			break;
@@ -103,7 +107,7 @@ public class BasicsAbacusTutorialController : MonoBehaviour {
 			tutorialText.text = "Good job! Lastly try to make the value of the abacus be 9";
 			if (abacus.getValue () == 9) {
 				tutorialText.text = "Congrats, you have made 9! You have sucessfully finished this tutorial :)";
-				state = 3;
+				state ++;
 				startTime = Time.time;
 			}
 			break;
@@ -112,34 +116,8 @@ public class BasicsAbacusTutorialController : MonoBehaviour {
 
 
 	public void performAction(string action){
-		switch (action) {
-		case "1":
-			abacus.setValue (1);
-			break;
-		case "2":
-			abacus.setValue (2);
-			break;
-		case "3":
-			abacus.setValue (3);
-			break;
-		case "4":
-			abacus.setValue (4);
-			break;
-		case "5":
-			abacus.setValue (5);
-			break;
-		case "6":
-			abacus.setValue (6);
-			break;
-		case "7":
-			abacus.setValue (7);
-			break;
-		case "8":
-			abacus.setValue (8);
-			break;
-		case "9":
-			abacus.setValue (9);
-			break;
-		}
+		if (action.Equals (""))
+			return;
+		abacus.setValue (Int32.Parse (action));
 	}
 }
