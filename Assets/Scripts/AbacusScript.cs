@@ -25,7 +25,7 @@ public class AbacusScript : MonoBehaviour {
 		char[] kek = tmp.ToCharArray();
 		int[] digits = new int[tmp.Length];
 		for (int i = 0; i < digits.Length; i++) {
-			digits [i] = kek [i] - '0';
+			digits [i] = kek [digits.Length -1 -i] - '0';
 			columns [i].GetComponent<ColumnScript> ().setValue (digits [i]);
 		}
 
