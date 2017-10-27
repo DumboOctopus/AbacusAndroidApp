@@ -78,25 +78,9 @@ public class NavigationDrawerScript : MonoBehaviour {
 
 		//update b dragging
 
-		#if UNITY_ANDROID
-		if(Input.touchCount > 0){
-			Touch t = Input.touches[0];
-			if(t.phase == TouchPhase.Began){
-				if (Mathf.Abs (transform.position.x + widthOfPanel / 2f - t.position.x) < 40f) {
-					oldMouse = t.position;
-					oldMouse.y = this.transform.position.y;
-					oldMouse.z = this.transform.position.z;
-					bDragging = true;
-				}
-			}
-		}else {
-			bDragging = false;
-			//snap to a certain state
-			bSnapping = true;
-		}
+		#if UNITY_EDITOR
 		if (bDragging) {
-			Touch t = Input.touches[0];
-			Vector3 mouse = t.position;
+			Vector3 mouse = Input.mousePosition;
 			mouse.y = this.transform.position.y;
 			mouse.z = this.transform.position.z;
 
@@ -119,9 +103,37 @@ public class NavigationDrawerScript : MonoBehaviour {
 			}
 			oldMouse = mouse;
 		}
-		#else
+
+		if (Mathf.Abs (transform.position.x + widthOfPanel / 2f - Input.mousePosition.x) < 20f && (Input.touchCount > 0 || Input.GetMouseButton(0))) {
+			oldMouse = Input.mousePosition;
+			oldMouse.y = this.transform.position.y;
+			oldMouse.z = this.transform.position.z;
+			bDragging = true;
+		}
+		if (Input.GetMouseButtonUp(0) && Input.touchCount == 0) {
+			bDragging = false;
+			//snap to a certain state
+			bSnapping = true;
+		}
+		#elif UNITY_ANDROID
+		if(Input.touchCount > 0){
+		Touch t = Input.touches[0];
+		if(t.phase == TouchPhase.Began){
+		if (Mathf.Abs (transform.position.x + widthOfPanel / 2f - t.position.x) < 40f) {
+		oldMouse = t.position;
+		oldMouse.y = this.transform.position.y;
+		oldMouse.z = this.transform.position.z;
+		bDragging = true;
+		}
+		}
+		}else {
+		bDragging = false;
+		//snap to a certain state
+		bSnapping = true;
+		}
 		if (bDragging) {
-		Vector3 mouse = Input.mousePosition;
+		Touch t = Input.touches[0];
+		Vector3 mouse = t.position;
 		mouse.y = this.transform.position.y;
 		mouse.z = this.transform.position.z;
 
@@ -144,19 +156,6 @@ public class NavigationDrawerScript : MonoBehaviour {
 		}
 		oldMouse = mouse;
 		}
-
-		if (Mathf.Abs (transform.position.x + widthOfPanel / 2f - Input.mousePosition.x) < 20f && (Input.touchCount > 0 || Input.GetMouseButton(0))) {
-			oldMouse = Input.mousePosition;
-			oldMouse.y = this.transform.position.y;
-			oldMouse.z = this.transform.position.z;
-			bDragging = true;
-		}
-		if (Input.GetMouseButtonUp(0) && Input.touchCount == 0) {
-			bDragging = false;
-			//snap to a certain state
-			bSnapping = true;
-		}
-
 		#endif
 
 
