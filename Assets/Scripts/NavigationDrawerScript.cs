@@ -21,10 +21,15 @@ public class NavigationDrawerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		if(Input.GetKey(KeyCode.RightArrow)){
+			Debug.Log ("hi");
+			this.transform.position +=  Vector3.right;
+		}
+
 		if (bSnapping) {
 			
 			Vector3 pos = transform.position;
-			pos.x += Time.deltaTime * 1000*(pos.x - startX) / (maxOut - startX);
+			pos.x += Time.deltaTime * 1000*(pos.x - startX - widthOfPanel/2f) / (maxOut - startX);
 			Debug.Log ("dPos = " + 1000*(pos.x - startX) / (maxOut - startX));
 
 			transform.position = pos;
@@ -79,6 +84,7 @@ public class NavigationDrawerScript : MonoBehaviour {
 		//update b dragging
 
 		#if UNITY_EDITOR
+
 		if (bDragging) {
 			Vector3 mouse = Input.mousePosition;
 			mouse.y = this.transform.position.y;
@@ -104,7 +110,7 @@ public class NavigationDrawerScript : MonoBehaviour {
 			oldMouse = mouse;
 		}
 
-		if (Mathf.Abs (transform.position.x + widthOfPanel / 2f - Input.mousePosition.x) < 20f && (Input.touchCount > 0 || Input.GetMouseButton(0))) {
+		if (Mathf.Abs (transform.position.x + widthOfPanel / 2f - Input.mousePosition.x) < 40f && (Input.touchCount > 0 || Input.GetMouseButton(0))) {
 			oldMouse = Input.mousePosition;
 			oldMouse.y = this.transform.position.y;
 			oldMouse.z = this.transform.position.z;
